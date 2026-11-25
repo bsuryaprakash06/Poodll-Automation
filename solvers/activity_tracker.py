@@ -2,6 +2,7 @@ import json
 import re
 from datetime import datetime
 from pathlib import Path
+from typing import Optional
 from playwright.sync_api import Page
 from config import Config
 from utils.score_parser import parse_score_value
