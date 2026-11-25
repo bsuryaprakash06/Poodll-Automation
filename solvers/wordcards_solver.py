@@ -1,6 +1,7 @@
 import json
 import time
 from pathlib import Path
+from urllib.parse import urlparse
 from playwright.sync_api import Page
 from audio.router import AudioRouter
 from config import Config
@@ -90,9 +91,10 @@ class WordcardsSolver:
                 else:
                     import re
                     cmid_match = re.search(r"id=(\d+)", self.page.url)
-                    if cmid_match:
+                    parsed = urlparse(self.page.url)
+                    if cmid_match and parsed.scheme in ("http", "https") and parsed.netloc:
                         cmid = cmid_match.group(1)
-                        fallback_url = f"https://lms2.ai.saveetha.in/mod/wordcards/activity.php?id={cmid}&nextstep=step1practicetype"
+                        fallback_url = f"{parsed.scheme}://{parsed.netloc}/mod/wordcards/activity.php?id={cmid}&nextstep=step1practicetype"
                         print(f"[Wordcards] Fallback navigating to practice URL: {fallback_url}")
                         try:
                             self.page.goto(fallback_url)

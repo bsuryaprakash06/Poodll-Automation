@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from urllib.parse import urlparse
 from playwright.sync_api import Page, BrowserContext
 from config import Config
 
@@ -47,12 +48,26 @@ class SessionManager:
 
         return False
 
+    def _resolve_login_url(self, page: Page) -> str:
+        """Derives the Moodle login URL from the current page URL or Config."""
+        candidates = [page.url, Config.TARGET_URL] + list(getattr(Config, "COURSE_URLS", []) or [])
+        for candidate in candidates:
+            if not candidate:
+                continue
+            parsed = urlparse(candidate)
+            if parsed.scheme in ("http", "https") and parsed.netloc:
+                return f"{parsed.scheme}://{parsed.netloc}/login/index.php"
+        return ""
+
     def perform_login(self, page: Page, context: BrowserContext = None) -> bool:
         """Performs Moodle login using credentials from Config and saves auth.json."""
         print("[Auth] Performing automated Moodle login...")
 
         if "login" not in page.url.lower() and page.locator("#username").count() == 0:
-            login_url = "https://lms2.ai.saveetha.in/login/index.php"
+            login_url = self._resolve_login_url(page)
+            if not login_url:
+                print("[Auth Error] Could not determine Moodle login URL. Configure TARGET_URL or COURSE_URLS.")
+                return False
             page.goto(login_url, wait_until="domcontentloaded")
 
         try:
