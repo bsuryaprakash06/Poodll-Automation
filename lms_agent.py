@@ -442,8 +442,8 @@ def run():
                     if tracker and tracker.is_completed(act["url"]):
                         status_suffix = f"  --> [ALREADY COMPLETED | Score: {raw_score}]"
                     elif raw_score:
-                        min_score = getattr(Config, "READALOUD_MIN_SCORE", 80)
-                        status_suffix = f"  --> [PENDING / RETRY (Score: {raw_score} < {min_score}%)]"
+                        min_score = Config.get_threshold(act.get("type", ""))
+                        status_suffix = f"  --> [PENDING / RETRY (Score: {raw_score} < {min_score:g}%)]"
                     else:
                         status_suffix = "  --> [PENDING]"
                     print(f"  {i:2d}. [{act.get('type', 'act'):10s}] {act['title']}{status_suffix}")
