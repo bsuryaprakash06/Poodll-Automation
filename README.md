@@ -11,6 +11,10 @@
 
 An automated Moodle & Poodll Learning Management System (LMS) automation suite utilizing **Python**, **Playwright**, **VB-Audio Virtual Cable**, and the **Google Gemini API** for speech recognition, interactive video, flashcards, and reading assessments.
 
+> [!IMPORTANT]
+> **Quizzes are not supported in this repository.**  
+> Standard Moodle quizzes will not work with this automation framework. For comprehensive quiz automation, please refer to the [Moodle-Quiz-Automation](https://github.com/bsuryaprakash06/Moodle-Quiz-Automation) repository.
+
 ---
 
 ## Support & Sponsorship
@@ -31,7 +35,7 @@ If you find this project helpful and want to support its ongoing development, co
   - 🎥 **H5P & Interactive Video (`hvp`, `h5pactivity`):** Cross-iframe query solving, drag-and-drops, video milestone quizzes, and question completion.
   - 🗂️ **Poodll WordCards (`wordcards`):** Multistage flashcard drills, definition pairing, and vocabulary testing.
   - 🎙️ **Poodll Solo Speaking (`solo`):** AI-powered continuous monologue formulation and audio submission.
-  - 📝 **Moodle Quizzes (`quiz`):** Multiple-choice, true/false, fill-in-the-blank, and standard assessments.
+  - ⚠️ **Moodle Quizzes (`quiz`):** *Not supported in this suite.* Quizzes will not work with this tool; please refer to [Moodle-Quiz-Automation](https://github.com/bsuryaprakash06/Moodle-Quiz-Automation).
 * **Interactive Activity Selector with Multi-Theme Engine:**
   - Grouped view with real-time text filter and master selection toggles.
   - Quick action: **Select Pending Only** to avoid re-attempting finished activities.
@@ -205,7 +209,7 @@ Poodll-Automation/
 │   ├── activity_tracker.py      # Moodle activity progress tracker
 │   ├── gemini_generator.py      # Google Gemini AI answer engine
 │   ├── hvp_solver.py            # H5P & Interactive Video solver
-│   ├── quiz_solver.py           # Standard quiz and assessment solver
+│   ├── quiz_solver.py           # Standard quiz solver (Deprecated - Use Moodle-Quiz-Automation)
 │   ├── readaloud_solver.py      # Poodll Read-Aloud speech solver
 │   ├── solo_solver.py           # Poodll Solo speaking solver
 │   └── wordcards_solver.py      # Poodll WordCards flashcard drill solver
